@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueMind IA | Socio Creativo de Prototipado Rápido</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --accent: #4cc9f0;
+            --dark: #0d1b2a;
+            --light: #e0e1dd;
+            --success: #2ec4b6;
+            --danger: #e71d36;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.18);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77);
+            color: var(--light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(67, 97, 238, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(114, 9, 183, 0.15) 0%, transparent 40%);
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+        }
+
+        .logo i {
+            font-size: 28px;
+            color: white;
+        }
+
+        .title h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), #f8f9fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .title p {
+            font-size: 16px;
+            opacity: 0.8;
+            letter-spacing: 0.5px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            color: var(--accent);
+        }
+
+        .section-title i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--light);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.2);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .mood-selector {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .mood-option {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .mood-option:hover {
+            transform: translateY(-3px);
+            background: rgba(76, 201, 240, 0.1);
+        }
+
+        .mood-option.active {
+            background: rgba(76, 201, 240, 0.2);
+            border-color: var(--accent);
+            box-shadow: 0 0 12px rgba(76, 201, 240, 0.3);
+        }
+
+        .mood-option i {
+            font-size: 20px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px 20px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .btn-danger {
+            background: rgba(231, 29, 54, 0.2);
+            color: #ff6b81;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--primary-dark), #651e98);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-danger:hover {
+            background: rgba(231, 29, 54, 0.3);
+        }
+
+        .project-details {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .project-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .project-tag {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .description-box {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        .description-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .description-content {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .concept-box {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .status-box {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 18px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-item {
+            text-align: center;
+        }
+
+        .status-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        .status-label {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .ai-suggestion {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(76, 201, 240, 0.1);
+            border-radius: 18px;
+            border: 1px solid rgba(76, 201, 240, 0.2);
+        }
+
+        .ai-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .ai-content {
+            line-height: 1.6;
+        }
+
+        .ai-highlight {
+            background: rgba(76, 201, 240, 0.2);
+            padding: 0 5px;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .actions {
+                flex-direction: column;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .mood-selector {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <div class="logo">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="title">
+                    <h1>BlueMind IA</h1>
+                    <p>Socio Creativo de Prototipado Rápido</p>
+                </div>
+            </div>
+
+            <div class="section-title">
+                <i class="fas fa-plus-circle"></i>
+                <span>Crear Nuevo Proyecto</span>
+            </div>
+
+            <div class="form-group">
+                <label for="projectTitle">Título del Proyecto</label>
+                <input type="text" id="projectTitle" value="BlueMind IA">
+            </div>
+
+            <div class="form-group">
+                <label for="projectDesc">Descripción</label>
+                <textarea id="projectDesc">python, creador de aplicaciones con python, ideas creativas, usen BlueMind IA que es un socio creativo de prototipado rápido</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="creativeConcept">Concepto Creativo</label>
+                <textarea id="creativeConcept">usen BlueMind IA que es un socio creativo de prototipado rápido</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Estado de Ánimo</label>
+                <div class="mood-selector">
+                    <div class="mood-option active">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="mood-option">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="mood-option">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <div class="mood-option">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="mood-option">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-primary">
+                    <i class="fas fa-folder-open"></i> Abrir
+                </button>
+                <button class="btn btn-danger">
+                    <i class="fas fa-trash-alt"></i> Eliminar
+                </button>
+            </div>
+        </div>
+
+        <div class="card project-details">
+            <div class="project-header">
+                <div class="project-title">BlueMind IA</div>
+                <div class="project-tag">PROTOTIPADO</div>
+            </div>
+
+            <div class="description-box">
+                <div class="description-title">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Descripción del Proyecto</span>
+                </div>
+                <div class="description-content">
+                    BlueMind IA es una herramienta avanzada para creadores que trabajan con Python, 
+                    ofreciendo un entorno de prototipado rápido con asistencia de inteligencia artificial. 
+                    Ideal para desarrolladores que necesitan transformar ideas creativas en aplicaciones 
+                    funcionales en tiempo récord.
+                </div>
+            </div>
+
+            <div class="concept-box">
+                <div class="description-title">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Concepto Creativo</span>
+                </div>
+                <div class="description-content">
+                    BlueMind IA actúa como un socio creativo que acelera el proceso de prototipado, 
+                    permitiendo a los desarrolladores concentrarse en la innovación mientras la IA 
+                    maneja la implementación técnica.
+                </div>
+            </div>
+
+            <div class="status-box">
+                <div class="status-item">
+                    <div class="status-value">87%</div>
+                    <div class="status-label">Completado</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-value">24</div>
+                    <div class="status-label">Prototipos</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-value">15</div>
+                    <div class="status-label">Colaboradores</div>
+                </div>
+            </div>
+
+            <div class="ai-suggestion">
+                <div class="ai-title">
+                    <i class="fas fa-robot"></i>
+                    <span>Sugerencia de BlueMind IA</span>
+                </div>
+                <div class="ai-content">
+                    Recomendamos integrar <span class="ai-highlight">Flask</span> para el backend y 
+                    <span class="ai-highlight">React</span> para el frontend en tu próximo prototipo. 
+                    Considera añadir un módulo de <span class="ai-highlight">aprendizaje automático</span> 
+                    para análisis predictivo de tendencias creativas.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Selector de estado de ánimo
+        const moodOptions = document.querySelectorAll('.mood-option');
+        moodOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                moodOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+            });
+        });
+
+        // Animación de carga para los porcentajes
+        const statusValues = document.querySelectorAll('.status-value');
+        statusValues.forEach(value => {
+            const target = parseInt(value.textContent);
+            let current = 0;
+            
+            const interval = setInterval(() => {
+                if (current < target) {
+                    current++;
+                    value.textContent = current + (value.textContent.includes('%') ? '%' : '');
+                } else {
+                    clearInterval(interval);
+                }
+            }, 30);
+        });
+    </script>
+</body>
+</html>
