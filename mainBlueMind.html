@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlueMind IA | Socio Creativo de Prototipado Rápido</title>
+    <title>BlueMind IA</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #4361ee;
-            --primary-dark: #3a56d4;
-            --secondary: #7209b7;
-            --accent: #4cc9f0;
-            --dark: #0d1b2a;
-            --light: #e0e1dd;
-            --success: #2ec4b6;
-            --danger: #e71d36;
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.18);
+            --primary: #0a84ff;
+            --primary-dark: #0066cc;
+            --secondary: #5e5ce6;
+            --background: #121212;
+            --card-bg: #1e1e1e;
+            --text: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #64d2ff;
+            --success: #30d158;
+            --warning: #ff9f0a;
+            --danger: #ff453a;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
         }
 
         * {
@@ -27,56 +30,24 @@
         }
 
         body {
+            background: var(--background);
+            color: var(--text);
             min-height: 100vh;
-            background: linear-gradient(135deg, #0d1b2a, #1b263b, #415a77);
-            color: var(--light);
-            display: flex;
-            justify-content: center;
-            align-items: center;
             padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(67, 97, 238, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(114, 9, 183, 0.15) 0%, transparent 40%);
-            z-index: -1;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(94, 92, 230, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(10, 132, 255, 0.1) 0%, transparent 20%);
         }
 
         .container {
-            width: 100%;
             max-width: 1200px;
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 30px;
+            margin: 0 auto;
         }
 
-        .card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
-            padding: 30px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
-        }
-
+        /* Header */
         .header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
             padding-bottom: 20px;
@@ -84,453 +55,366 @@
         }
 
         .logo {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 18px;
             display: flex;
-            justify-content: center;
             align-items: center;
-            margin-right: 15px;
+            gap: 15px;
         }
 
-        .logo i {
-            font-size: 28px;
-            color: white;
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
         }
 
-        .title h1 {
+        .logo-text h1 {
             font-size: 28px;
             font-weight: 700;
-            background: linear-gradient(90deg, var(--accent), #f8f9fa);
+            background: linear-gradient(90deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 5px;
         }
 
-        .title p {
-            font-size: 16px;
-            opacity: 0.8;
-            letter-spacing: 0.5px;
+        .logo-text p {
+            color: var(--text-secondary);
+            font-size: 14px;
         }
 
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            color: var(--accent);
-        }
-
-        .section-title i {
-            margin-right: 10px;
-            font-size: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            opacity: 0.9;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 14px 18px;
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(0, 0, 0, 0.2);
-            color: var(--light);
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.2);
-        }
-
-        textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .mood-selector {
-            display: flex;
-            gap: 12px;
-            margin-top: 10px;
-        }
-
-        .mood-option {
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.2s ease;
-        }
-
-        .mood-option:hover {
-            transform: translateY(-3px);
-            background: rgba(76, 201, 240, 0.1);
-        }
-
-        .mood-option.active {
-            background: rgba(76, 201, 240, 0.2);
-            border-color: var(--accent);
-            box-shadow: 0 0 12px rgba(76, 201, 240, 0.3);
-        }
-
-        .mood-option i {
-            font-size: 20px;
-        }
-
-        .actions {
+        .button-group {
             display: flex;
             gap: 15px;
-            margin-top: 30px;
         }
 
         .btn {
-            flex: 1;
-            padding: 16px 20px;
-            border-radius: 14px;
-            font-size: 16px;
+            padding: 12px 25px;
+            border-radius: 50px;
             font-weight: 600;
-            border: none;
+            font-size: 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             display: flex;
-            justify-content: center;
             align-items: center;
             gap: 10px;
+            border: none;
+            outline: none;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
+            box-shadow: 0 4px 20px rgba(10, 132, 255, 0.3);
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-
-        .btn-danger {
-            background: rgba(231, 29, 54, 0.2);
-            color: #ff6b81;
+            background: transparent;
+            color: var(--text);
+            border: 2px solid rgba(255, 255, 255, 0.2);
         }
 
         .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-primary:hover {
-            background: linear-gradient(135deg, var(--primary-dark), #651e98);
+            box-shadow: 0 6px 25px rgba(10, 132, 255, 0.5);
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--primary);
         }
 
-        .btn-danger:hover {
-            background: rgba(231, 29, 54, 0.3);
+        /* Main Content */
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
         }
 
-        .project-details {
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-header {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-header h2 {
+            font-size: 22px;
             display: flex;
-            flex-direction: column;
-            height: 100%;
+            align-items: center;
+            gap: 10px;
         }
 
-        .project-header {
+        .card-header h2 i {
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
+        }
+
+        /* Progress Bars */
+        .progress-container {
+            margin-bottom: 20px;
+        }
+
+        .progress-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 8px;
         }
 
-        .project-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: white;
-        }
-
-        .project-tag {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 14px;
+        .progress-title {
             font-weight: 600;
-        }
-
-        .description-box {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 18px;
-            padding: 20px;
-            margin-bottom: 25px;
-            flex-grow: 1;
-        }
-
-        .description-title {
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: var(--accent);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .description-content {
-            line-height: 1.6;
-            opacity: 0.9;
-        }
-
-        .concept-box {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 18px;
-            padding: 20px;
-            margin-bottom: 25px;
-        }
-
-        .status-box {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 18px;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .status-item {
-            text-align: center;
-        }
-
-        .status-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 5px;
-        }
-
-        .status-label {
+        .progress-date {
+            color: var(--text-secondary);
             font-size: 14px;
-            opacity: 0.7;
         }
 
-        .ai-suggestion {
-            margin-top: 25px;
-            padding: 20px;
-            background: rgba(76, 201, 240, 0.1);
-            border-radius: 18px;
-            border: 1px solid rgba(76, 201, 240, 0.2);
-        }
-
-        .ai-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-            color: var(--accent);
-        }
-
-        .ai-content {
-            line-height: 1.6;
-        }
-
-        .ai-highlight {
-            background: rgba(76, 201, 240, 0.2);
-            padding: 0 5px;
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 4px;
+            overflow: hidden;
         }
 
-        @media (max-width: 900px) {
-            .container {
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease-in-out;
+        }
+
+        .progress-87 { width: 87%; background: linear-gradient(90deg, var(--primary), var(--success)); }
+        .progress-32 { width: 32%; background: linear-gradient(90deg, var(--warning), #ffd60a); }
+        .progress-45 { width: 45%; background: linear-gradient(90deg, var(--secondary), #bf5af2); }
+        .progress-95 { width: 95%; background: linear-gradient(90deg, var(--success), #30d158); }
+        .progress-72 { width: 72%; background: linear-gradient(90deg, #ff9f0a, #ffd60a); }
+        .progress-100 { width: 100%; background: linear-gradient(90deg, var(--success), #30d158); }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content {
                 grid-template-columns: 1fr;
             }
             
-            .project-header {
+            .button-group {
+                flex-direction: column;
+                width: 100%;
+                margin-top: 15px;
+            }
+            
+            .header {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 15px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .actions {
-                flex-direction: column;
-            }
-            
-            .card {
-                padding: 20px;
-            }
-            
-            .mood-selector {
-                flex-wrap: wrap;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="card">
-            <div class="header">
-                <div class="logo">
+        <!-- Header con botones -->
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
                     <i class="fas fa-brain"></i>
                 </div>
-                <div class="title">
+                <div class="logo-text">
                     <h1>BlueMind IA</h1>
-                    <p>Socio Creativo de Prototipado Rápido</p>
+                    <p>Socio creativo de prototipado rápido</p>
                 </div>
             </div>
-
-            <div class="section-title">
-                <i class="fas fa-plus-circle"></i>
-                <span>Crear Nuevo Proyecto</span>
-            </div>
-
-            <div class="form-group">
-                <label for="projectTitle">Título del Proyecto</label>
-                <input type="text" id="projectTitle" value="BlueMind IA">
-            </div>
-
-            <div class="form-group">
-                <label for="projectDesc">Descripción</label>
-                <textarea id="projectDesc">python, creador de aplicaciones con python, ideas creativas, usen BlueMind IA que es un socio creativo de prototipado rápido</textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="creativeConcept">Concepto Creativo</label>
-                <textarea id="creativeConcept">usen BlueMind IA que es un socio creativo de prototipado rápido</textarea>
-            </div>
-
-            <div class="form-group">
-                <label>Estado de Ánimo</label>
-                <div class="mood-selector">
-                    <div class="mood-option active">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <div class="mood-option">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <div class="mood-option">
-                        <i class="fas fa-flask"></i>
-                    </div>
-                    <div class="mood-option">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="mood-option">
-                        <i class="fas fa-palette"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="actions">
-                <button class="btn btn-primary">
-                    <i class="fas fa-folder-open"></i> Abrir
+            <div class="button-group">
+                <button class="btn btn-secondary" id="open-project">
+                    <i class="fas fa-folder-open"></i> Abrir Proyecto Existente
                 </button>
-                <button class="btn btn-danger">
-                    <i class="fas fa-trash-alt"></i> Eliminar
+                <button class="btn btn-primary" id="create-project">
+                    <i class="fas fa-plus-circle"></i> Crear Proyecto
                 </button>
             </div>
         </div>
 
-        <div class="card project-details">
-            <div class="project-header">
-                <div class="project-title">BlueMind IA</div>
-                <div class="project-tag">PROTOTIPADO</div>
+        <!-- Contenido principal -->
+        <div class="content">
+            <!-- Nuevo Proyecto -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-rocket"></i> Nuevo Proyecto</h2>
+                </div>
+                <div class="form-group">
+                    <label for="project-title">Título</label>
+                    <input type="text" id="project-title" class="form-control" placeholder="BlueMind AI">
+                </div>
+                <div class="form-group">
+                    <label for="project-description">Descripción</label>
+                    <textarea id="project-description" class="form-control" rows="3" placeholder="Python, creador de aplicaciones con Python, ideas creativas..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="project-concept">Concepto</label>
+                    <textarea id="project-concept" class="form-control" rows="2" placeholder="Usen BlueMind IA que es un socio creativo de prototipado rápido"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="project-mood">Estado de Ánimo</label>
+                    <input type="text" id="project-mood" class="form-control" value="Futurista">
+                </div>
+                <div class="form-group">
+                    <label for="project-references">Referencias Creativas</label>
+                    <input type="text" id="project-references" class="form-control" value="Sabir Imágenes/Audio/Video">
+                </div>
+                <button class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-paper-plane"></i> Guardar Proyecto
+                </button>
             </div>
 
-            <div class="description-box">
-                <div class="description-title">
-                    <i class="fas fa-file-alt"></i>
-                    <span>Descripción del Proyecto</span>
+            <!-- Proyectos Recientes -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-history"></i> Proyectos Recientes</h2>
                 </div>
-                <div class="description-content">
-                    BlueMind IA es una herramienta avanzada para creadores que trabajan con Python, 
-                    ofreciendo un entorno de prototipado rápido con asistencia de inteligencia artificial. 
-                    Ideal para desarrolladores que necesitan transformar ideas creativas en aplicaciones 
-                    funcionales en tiempo récord.
+                
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <div class="progress-title">
+                            <i class="fas fa-brain" style="color: var(--primary);"></i> BlueMind IA
+                        </div>
+                        <div class="progress-date">Hoy</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-87"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <div class="progress-title">
+                            <i class="fas fa-microchip" style="color: var(--warning);"></i> Sistema IoT
+                        </div>
+                        <div class="progress-date">10 Jun</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-32"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <div class="progress-title">
+                            <i class="fas fa-vr-cardboard" style="color: var(--secondary);"></i> Prototipo VR
+                        </div>
+                        <div class="progress-date">Ayer</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-45"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <div class="progress-title">
+                            <i class="fas fa-robot" style="color: var(--success);"></i> Plataforma IA
+                        </div>
+                        <div class="progress-date">5 Jun</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-95"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <div class="progress-title">
+                            <i class="fas fa-graduation-cap" style="color: #ffd60a;"></i> App Educativo
+                        </div>
+                        <div class="progress-date">15 Jun</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-72"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <div class="progress-title">
+                            <i class="fas fa-desktop" style="color: #bf5af2;"></i> Diseño Web
+                        </div>
+                        <div class="progress-date">3 Jun</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-100"></div>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <div class="concept-box">
-                <div class="description-title">
-                    <i class="fas fa-lightbulb"></i>
-                    <span>Concepto Creativo</span>
-                </div>
-                <div class="description-content">
-                    BlueMind IA actúa como un socio creativo que acelera el proceso de prototipado, 
-                    permitiendo a los desarrolladores concentrarse en la innovación mientras la IA 
-                    maneja la implementación técnica.
-                </div>
-            </div>
-
-            <div class="status-box">
-                <div class="status-item">
-                    <div class="status-value">87%</div>
-                    <div class="status-label">Completado</div>
-                </div>
-                <div class="status-item">
-                    <div class="status-value">24</div>
-                    <div class="status-label">Prototipos</div>
-                </div>
-                <div class="status-item">
-                    <div class="status-value">15</div>
-                    <div class="status-label">Colaboradores</div>
-                </div>
-            </div>
-
-            <div class="ai-suggestion">
-                <div class="ai-title">
-                    <i class="fas fa-robot"></i>
-                    <span>Sugerencia de BlueMind IA</span>
-                </div>
-                <div class="ai-content">
-                    Recomendamos integrar <span class="ai-highlight">Flask</span> para el backend y 
-                    <span class="ai-highlight">React</span> para el frontend en tu próximo prototipo. 
-                    Considera añadir un módulo de <span class="ai-highlight">aprendizaje automático</span> 
-                    para análisis predictivo de tendencias creativas.
-                </div>
-            </div>
+        <div class="footer">
+            <p>BlueMind IA - Socio creativo de prototipado rápido | © 2025 Todos los derechos reservados</p>
         </div>
     </div>
 
     <script>
-        // Selector de estado de ánimo
-        const moodOptions = document.querySelectorAll('.mood-option');
-        moodOptions.forEach(option => {
-            option.addEventListener('click', () => {
-                moodOptions.forEach(opt => opt.classList.remove('active'));
-                option.classList.add('active');
-            });
+        // Funcionalidad para los botones
+        document.getElementById('create-project').addEventListener('click', function() {
+            alert('Función de creación de nuevo proyecto activada. Se abrirá el formulario para crear un nuevo proyecto.');
+            // Aquí normalmente se abriría un modal o se resetearía el formulario
+            document.getElementById('project-title').focus();
         });
 
-        // Animación de carga para los porcentajes
-        const statusValues = document.querySelectorAll('.status-value');
-        statusValues.forEach(value => {
-            const target = parseInt(value.textContent);
-            let current = 0;
-            
-            const interval = setInterval(() => {
-                if (current < target) {
-                    current++;
-                    value.textContent = current + (value.textContent.includes('%') ? '%' : '');
-                } else {
-                    clearInterval(interval);
-                }
-            }, 30);
+        document.getElementById('open-project').addEventListener('click', function() {
+            alert('Función de abrir proyecto existente activada. Se abrirá el explorador de archivos para seleccionar un proyecto.');
+            // Aquí normalmente se abriría un diálogo de selección de archivos
         });
     </script>
 </body>
